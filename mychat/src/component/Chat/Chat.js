@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 ///////////////////////////////////
 
 let socket;
-const ENDPOINT = "https://https://idkapp1.onrender.com";//
+const ENDPOINT = "https://idkapp1.onrender.com";//
 // const ENDPOINT = "http://localhost:4500";
 
 const Chat = () => {
