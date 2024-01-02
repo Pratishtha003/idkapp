@@ -25,11 +25,32 @@ const io=socketIO(server);
 io.on("connection",(socket)=>{         //this is a whole circuit and sockets are different users
     console.log("new Connection");
 
-    socket.on('joined',({user1})=>{
+    socket.on('joined',({user1,room1})=>{////////////////////
         users[socket.id]=user1;
         console.log(`${user1} has joined`);
         socket.emit('welcome',{user1:"Admin",message:`Welcome to the chat`});//sending from backend 
         socket.broadcast.emit('userJoined',{user1:"Admin",message:`${users[socket.id]} has joined`});//broadcast will send message to everyone other then the admin
+ 
+
+
+        ////////////////////////////////////////////////
+        console.log(`${room1}`);
+        var rooms = io.sockets.adapter.rooms;
+        console.log(rooms);
+        var room =rooms.get(room1);
+        console.log(room);
+
+        if (!users[room1]) {
+            users[room1] = [];
+        }
+        if (!room || room.size < 4) {
+            socket.join(room1);
+            socket.emit("create1");
+        } else {
+            socket.emit("full");
+        }
+        //////////////////////////////////////////////////
+
     })
 
     socket.on('message',({message,id})=>{

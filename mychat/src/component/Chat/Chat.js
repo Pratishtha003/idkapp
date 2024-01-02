@@ -5,14 +5,26 @@ import "./Chat.css";
 import Message from '../Message/Message';
 import ReactScrollBottom from "react-scroll-to-bottom";
 
+///////////////////////////////////
+import { room1 } from '../Join/Join';
+import { useNavigate } from 'react-router-dom';
+///////////////////////////////////
 
 let socket;
-const ENDPOINT = "https://cchat-l3wg.onrender.com";
+const ENDPOINT = "https://cchat-l3wg.onrender.com";//
+// const ENDPOINT = "http://localhost:4500";
 
 const Chat = () => {
 
   const [id, setid] = useState("")
   const [message,setMessage]=useState([]);
+
+/////////////////////
+  const navigate = useNavigate(); 
+///////////////////
+
+
+
   const send =()=>{
     const message = document.getElementById('chatInput').value;
     socket.emit('message',{message,id});  ///////////
@@ -30,7 +42,8 @@ const Chat = () => {
     })
     console.log(socket);
 
-    socket.emit('joined',{user1})   //emit means we are sending the user to the backend in index.js where socket.on is written & on means we sre recievning in backend
+    ////////////////////
+    socket.emit('joined',{user1,room1})   //emit means we are sending the user to the backend in index.js where socket.on is written & on means we sre recievning in backend
 
     socket.on('welcome',(data)=>{
       // setMessage([...message,data]);
@@ -38,6 +51,19 @@ const Chat = () => {
       console.log(data.user1,data.message);//recieving from backend
     })
 
+    /////////////////////////////////////
+    socket.on("create1",()=>{
+      // creator = true;
+      send();
+    });
+  
+    socket.on("full",()=>{
+      navigate('/');
+      window.alert("Room is full");
+      // navigate('/');
+      // setRoomFull(true);
+    });
+    /////////////////////////////////////
     socket.on('userJoined',(data)=>{
       // setMessage([...message,data]);
       setMessage((message) => [...message, data]);

@@ -31,7 +31,7 @@
     box-sizing: border-box;
 }
 
-#joinInput{
+#joinInput, #room_name{
     width: 25vmax;
     padding: 1.5vmax;
     border: none;
@@ -39,6 +39,9 @@
     font-size: 1.2vmax;
     margin: 2vmax;
     box-sizing: border-box;
+}
+#room_name{
+    margin-top: -12px;
 }
 
 .joinbtn{
