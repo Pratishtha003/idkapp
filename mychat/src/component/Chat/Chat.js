@@ -33,17 +33,20 @@ const Chat = () => {
     socket.emit('joined',{user1})   //emit means we are sending the user to the backend in index.js where socket.on is written & on means we sre recievning in backend
 
     socket.on('welcome',(data)=>{
-      setMessage([...message,data]);
+      // setMessage([...message,data]);
+      setMessage((message) => [...message, data]);
       console.log(data.user1,data.message);//recieving from backend
     })
 
     socket.on('userJoined',(data)=>{
-      setMessage([...message,data]);
+      // setMessage([...message,data]);
+      setMessage((message) => [...message, data]);
       console.log(data.user1,data.message);
     })
 
     socket.on('leave',(data)=>{
-      setMessage([...message,data]);
+      // setMessage([...message,data]);
+      setMessage((message) => [...message, data]);
       console.log(data.user1,data.message)
     })
 
@@ -51,7 +54,7 @@ const Chat = () => {
       socket.emit('disconnect1');
       socket.off();
     }
-  },[]) //remove socket for 1 waning
+  },[]); //remove socket for 1 waning
 
   useEffect(()=>{
     socket.on('sendMessage',(data)=>{
@@ -61,7 +64,7 @@ const Chat = () => {
     return()=>{
       socket.off(); //aftern one message off the socket dont render again and again
     }
-  },[message])
+  },[message]);//
 
   // Inside the useEffect function, there is an event listener attached
   //to the connect event of a socket object. The socket.on method is typically
